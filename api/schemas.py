@@ -2,9 +2,15 @@ from pydantic import BaseModel
 from typing import Union
 
 
-class Item(BaseModel):
+class UserSchema(BaseModel):
+    id: int
     name: str
-    price: float
-    is_offer: Union[bool, None] = None
+    surname: str
+    nickname: str
+    email: str
 
 
+class OSTSchemas(BaseModel):
+    id: int
+    neft_upr: str
+    ost: str
