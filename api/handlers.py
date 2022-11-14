@@ -1,4 +1,4 @@
-from db.model_user import User, OST
+from db.model_user import User, OST, PumpAggregate
 from db.db import session
 import api.schemas as schemas_api
 
@@ -10,7 +10,7 @@ def get_user_from_db(user_id):
     return res
 
 
-def get_osts():
+def get_osts_from_db():
     osts = session.query(OST).first()
     res = schemas_api.OSTSchemas(id=osts.id, neft_upr=osts.neft_upr, ost=osts.ost)
     return res
@@ -25,4 +25,11 @@ def add_user_in_db(name, surname, nickname, ost_id, email):
 def add_ost_in_db(neft_upr, ost):
     ost = OST(neft_upr=neft_upr, ost=ost)
     session.add(ost)
+    session.commit()
+
+
+def add_aggregate(ost_id, pump, electric_motor, kpd_pump, kpd_electric, station):
+    aggregate = PumpAggregate(ost_id=ost_id, pump=pump, electric_motor=electric_motor, kpd_pump=kpd_pump,
+                              kpd_electric=kpd_electric, station=station)
+    session.add(aggregate)
     session.commit()

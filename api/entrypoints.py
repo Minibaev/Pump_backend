@@ -1,6 +1,6 @@
 from typing import Union
 from Pump_backend.main import app
-from api.handlers import get_user_from_db, get_osts, add_user_in_db, add_ost_in_db
+from api.handlers import get_user_from_db, get_osts_from_db, add_user_in_db, add_ost_in_db, add_aggregate
 
 
 @app.post("/users/add/")
@@ -22,6 +22,12 @@ def get_user_id(user_id: int):
 
 
 @app.get("/osts")
-def update_item():
-    res = get_osts()
+def get_osts():
+    res = get_osts_from_db()
     return res
+
+
+@app.post("/aggregate")
+def post_aggregate(ost_id: int, pump: str, electric_motor: str, kpd_pump: float, kpd_electric: float, station: str):
+    add_aggregate(ost_id, pump, electric_motor, kpd_pump, kpd_electric, station)
+    return {"respones": "aggregate create"}

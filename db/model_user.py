@@ -1,5 +1,5 @@
 from sqlalchemy.ext.declarative import declarative_base
-from sqlalchemy import create_engine, Column, Integer, String, DateTime, ForeignKey
+from sqlalchemy import create_engine, Column, Integer, String, DateTime, ForeignKey, Float
 from sqlalchemy.orm import relationship
 
 DeclarativeBase = declarative_base()
@@ -24,3 +24,17 @@ class OST(DeclarativeBase):
     neft_upr = Column(String, nullable=False)
     ost = Column(String, nullable=False)
     user = relationship("User", back_populates="addresses")
+    pump_ost = relationship("PumpAggregate", back_populates="ost_pump")
+
+
+class PumpAggregate(DeclarativeBase):
+    __tablename__ = "PumpAggregate"
+
+    id = Column(Integer, primary_key=True)
+    station = Column(Integer, nullable=False)
+    ost_id = Column(Integer, ForeignKey("OST.id", ondelete="CASCADE"))
+    pump = Column(String, nullable=True)
+    electric_motor = Column(String, nullable=False)
+    kpd_pump = Column(Float, nullable=False)
+    kpd_electric = Column(Float, nullable=False)
+    ost_pump = relationship("OST", back_populates="pump_ost")
