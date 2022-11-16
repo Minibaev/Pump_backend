@@ -1,6 +1,6 @@
 from typing import Union
 from Pump_backend.main import app
-from api.handlers import get_user_from_db, get_osts_from_db, add_user_in_db, add_ost_in_db, add_aggregate
+from api.manager import get_user_from_db, get_osts_from_db, add_user_in_db, add_ost_in_db, add_aggregate
 
 
 @app.post("/users/add/")
